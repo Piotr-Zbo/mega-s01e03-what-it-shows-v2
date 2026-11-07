@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="kb-signature" content="v1.eyJzdWIiOiIxOTkxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTQwMDk2MTcsImV4cCI6MTc5NDA5NjAxN30.np4g9oGDUbfHGuvw5RTzOWorffSnwgAG1hfKDyDfAho">
+  <title>#4471 · two date problems</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #17212b; background: #f5f7fa; }
+    body { margin: 0; padding: 2rem 1rem; }
+    main { max-width: 58rem; margin: auto; }
+    .eyebrow { color: #526579; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: .25rem 0 1rem; }
+    .summary, .outcome, article { background: white; border: 1px solid #dce3eb; border-radius: .85rem; padding: 1.25rem; }
+    .causes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; margin: 1.25rem 0; }
+    article h2 { margin-top: 0; }
+    .count { color: #126b59; font-size: 1.8rem; font-weight: 700; }
+    .meta, .note, footer { color: #526579; font-size: .9rem; }
+    .note { border-left: 3px solid #126b59; padding-left: .75rem; }
+    .outcome { border-left: 4px solid #126b59; }
+    footer { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Support knowledge base · Incident 4471</p>
+    <h1>#4471 · two date problems</h1>
+    <p>By 4 October, the desk had merged 412 unique reports into #4471. The export contains repeated rows, so each report ID is counted once. Tenant locale and booking form distinguish the two causes; intake's initial guess does not.</p>
+    <p class="summary"><strong>412 unique reports</strong> · 2 causes · 15 repeated export rows counted once</p>
+    <section class="causes" aria-label="Causes">
+      <article>
+        <h2>Shared parser · <span class="count">379 reports</span></h2>
+        <p>The shared parser reads month first, flipping dates for tenants whose locale writes day first.</p>
+        <p class="meta">11 tenants · 2026-04-01 to 2026-10-04</p>
+        <p class="meta">Parser fix: <code>fix(dates): parse dd/mm for eu locales</code>.</p>
+        <p class="note">Includes the desk's five one-day-move notes; they are not a third problem.</p>
+      </article>
+      <article>
+        <h2>Booking-v3 date hint · <span class="count">33 reports</span></h2>
+        <p>The booking-v3 form's month-first date hint conflicts with day-first tenants' date conventions.</p>
+        <p class="meta">3 tenants · 2026-04-17 to 2026-09-22</p>
+        <p class="meta">The booking-v3 form was retired; this problem will not be fixed.</p>
+      </article>
+    </section>
+    <footer>desk ref <strong>DR-AFDA-ASF9</strong></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,30 @@
+---
+layout: runbook
+title: '#4471 · two date problems'
+owner: support desk
+status: known
+reviewed: 2026-11-07
+signature: "v1.eyJzdWIiOiIxOTkxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTQwMDk2MTcsImV4cCI6MTc5NDA5NjAxN30.np4g9oGDUbfHGuvw5RTzOWorffSnwgAG1hfKDyDfAho"
+---
+
+<script>
+  import Incident4471Breakdown from '#lib/kb/Incident4471Breakdown.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+By 4 October, the desk had merged **412 unique reports** into #4471. The export contains repeated rows, so each report ID is counted once. The reports describe two different causes; the tenant's locale and booking form distinguish them, not intake's initial guess.
+
+<Incident4471Breakdown />
+
+## What changed
+
+<Callout>
+  **Parser:** fixed by `fix(dates): parse dd/mm for eu locales`.
+
+  **Booking-v3 hint:** the form was retired; this problem will not be fixed.
+</Callout>
+
+The desk's five one-day-move notes are part of the parser count above. They do not form a third problem.
+
+<RenderStamp {signature} />
