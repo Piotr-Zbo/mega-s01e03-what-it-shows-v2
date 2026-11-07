@@ -1,0 +1,61 @@
+---
+layout: runbook
+title: '#4471 split · two causes'
+owner: support desk
+status: draft
+reviewed: 2026-11-07
+signature: v1.eyJzdWIiOiIxOTkxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTQwMTkxNDcsImV4cCI6MTc5NDEwNTU0N30.wmsv1Xh2J5A5d_v9xEL0yACSc6I2NMny88AP1AeVQeQ
+---
+
+<script>
+  import ProblemCounts from '#lib/kb/ProblemCounts.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) sits in the queue as one known issue. The reports merged into it do not have one cause — they have **two**. This page shows what the export says, what we recommend, and what has been done about each cause.
+
+<Callout>
+Not one issue with one fix. Two causes, two tickets, two different outcomes.
+</Callout>
+
+## Observed facts
+
+Everything in this section is computed at render time from the ticket export of 2026-10-04 in `src/lib/data`. A report's cause comes from its tenant and its booking form (`causes.ts`) — never from its subject line or the intake tag.
+
+<ProblemCounts ticket={4471} />
+
+- **`parser` — the shared parser reads dates month first.** Every tenant on file writes the day first, so day and month come out flipped. Seen at all 11 tenants, arriving by app, by email, and through the booking-v2 form.
+- **`hint` — the booking-v3 form's date hint.** The form prints `MM/DD/YYYY` under the date field, so people at day-first tenants type the month first and the form reads it the tenant's way. Seen only through the form, at the three booking-v3 tenants: alder.physio, copper.studio and pale.harbour. A different bug, with a different fix.
+- **The five one-day reports** (R-41202, R-41209, R-41236, R-41344, R-41620) are listed in `desk-notes.json`. They describe a day off by one, not a month flip. The desk files them under `parser` by tenant, so they are **inside the 379** — not an extra count, and not a third problem on this page. Their own cause is unconfirmed; they mention time zones and clock handling.
+- **The intake tag is a guess taken from the reporter's browser, and it disagrees with the cause.** 23 `parser` reports were tagged `hint`, and 15 `hint` reports were tagged `parser`.
+- **The export's pages overlap.** 427 rows, 15 repeated ids, 412 unique reports.
+
+<CauseTable ticket={4471} />
+
+## Resolution of each cause
+
+The export carries no resolution data. The resolutions below come from the engineering update on the [S01E03 challenge page](https://hq.mega.dev/challenges/what-it-shows), which reads "#4471 · closed 05 oct".
+
+| cause | reports | issue | resolution (as written in the update) | issue closed as |
+|---|---|---|---|---|
+| `parser` | 379 | [#1](https://github.com/Piotr-Zbo/mega-s01e03-what-it-shows-v2/issues/1) | FIXED: `fix(dates): parse dd/mm for eu locales` | completed |
+| `hint` | 33 | [#2](https://github.com/Piotr-Zbo/mega-s01e03-what-it-shows-v2/issues/2) | WON'T FIX: booking-v3 form retired | not planned |
+
+The five one-day reports stay inside the parser's 379. They have no ticket of their own, and the update says nothing separate about them.
+
+## Recommendations
+
+Suggestions for the desk. Nobody has done these yet.
+
+- Do not merge by subject alone during an incident (see [decision 0001](/kb/decisions/0001-dedupe-by-subject)). Check the tenant and the way the report came in.
+- The engineering update says #4471 is closed, yet its incident page still reads *known*. This page does not edit that page, and it does not touch decision 0001.
+
+## Completed actions
+
+- Filed one GitHub issue per cause in the public repo for this page: #1 (parser) and #2 (hint). Each carries the desk's count from the table above.
+- Closed #1 as completed and #2 as not planned, matching the resolutions above.
+- Added this page to the kb. No other page was changed, and no decision record was edited.
+
+<RenderStamp {signature} />

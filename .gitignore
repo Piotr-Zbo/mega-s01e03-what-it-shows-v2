@@ -2,3 +2,7 @@
 /challenge-proof.json
 /kb-export*.zip
 /node_modules/
+/.render/
+/analysis/
+/kb-export-new/
+/.vite/
