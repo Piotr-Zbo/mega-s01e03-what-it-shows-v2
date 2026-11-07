@@ -17,6 +17,11 @@ By 4 October, the desk had merged **412 unique reports** into #4471. The export 
 
 <Incident4471Breakdown />
 
+## Related tickets
+
+- [Shared parser issue #1 — 379 reports](https://github.com/Piotr-Zbo/mega-s01e03-what-it-shows-v2/issues/1)
+- [Booking-v3 hint issue #2 — 33 reports](https://github.com/Piotr-Zbo/mega-s01e03-what-it-shows-v2/issues/2)
+
 ## What changed
 
 <Callout>
